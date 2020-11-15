@@ -1,0 +1,21 @@
+global:
+  scrape_interval: 6s
+  evaluation_interval: 6s
+  scrape_timeout: 6s
+  external_labels:
+    monitor: 'polkadot-local-network-metrics'
+
+rule_files:
+  - 'rules.yml'
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets: ['localhost:9093', 'alertmanager:9093']
+
+scrape_configs:
+  - job_name: 'staking-ops'
+    static_configs:
+      - targets: ['node_charlie:9615', 'localhost:9615']
+        labels:
+          network: node_charlie
